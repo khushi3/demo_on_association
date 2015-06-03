@@ -9,14 +9,13 @@
   <% @projects.each do |project| %>
       <div class='col-md-6 project'>
         <%= link_to project.name, project %>
-        <p>contributors</p>
+        <p>Contributors</p>
         <% project.users.each do |user| %>
         <%= user.email %>
         <% end %>
-        <p>number of contributors</p>
-        <% project.users.each do |user| %>
-            <%= user.size %>
-        <% end %>
+        <p>Number of Contributors
+        <%= project.users.count %></p>
+
         <%= link_to 'Edit', edit_project_path(project) %>
       </div>
   <% end %>
