@@ -9,8 +9,10 @@
   <% @projects.each do |project| %>
       <div class='col-md-6 project'>
         <%= link_to project.name, project %>
-        ><%= link_to project.user.email %>
-        <!--<%= link_to project.task_id %>-->
+        <p>contributors</p>
+        <% project.users.each do |user| %>
+        <%= user.email %>
+            <% end %>
         <%= link_to 'Edit', edit_project_path(project) %>
       </div>
   <% end %>

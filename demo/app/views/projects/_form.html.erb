@@ -11,14 +11,20 @@
         </div>
     <% end %>
 
+
     <div class="field">
+      <%= f.hidden_field :owner_id, :value => current_user.id %><br>
+
       <%= f.label :name %><br>
-      <%= f.text_field :name %>
+      <%= f.text_field :name %><br>
+      <%= f.label :contributors%>
+      <%= select_tag "contributing_team", options_from_collection_for_select(User.all, 'id', 'email',@project.users.map{ |j| j.id }), :multiple => true %>
+
     </div>
-    <div class="field">
-    <%= collection_select(:project, :user_id, User.all, :id, :email, prompt: true) %>
-      </div>
     <div class="actions">
       <%= f.submit %>
     </div>
 <% end %>
+
+
+
