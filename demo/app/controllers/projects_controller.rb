@@ -2,9 +2,12 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   # GET /projects
-  # GET /projects.json
+  # GET /pr
+  # ojects.json
   def index
+
     @projects = Project.all
+
   end
 
   # GET /projects/1
@@ -14,18 +17,25 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
+
     @project = Project.new
+
   end
 
   # GET /projects/1/edit
   def edit
+
+    @users=User.all
+
   end
 
   # POST /projects
   # POST /projects.json
   def create
     @project = Project.new(project_params)
-
+    #@project = Project.new(params[:project])
+    @users = User.where(:id => params[:contributing_team])
+    @project.users << @users
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
@@ -40,8 +50,14 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+   # binding.pry
+    @project = Project.find(params[:id])
+    @users = User.where(:id => params[:contributing_team])
+    @project.users.destroy_all   #disassociate the already added organizers
+    @project.users << @users
     respond_to do |format|
-      if @project.update(project_params)
+      if @project.save
+      # if @project.update(project_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
@@ -69,6 +85,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :user_id, :task_id)
+      params.require(:project).permit(:name, :user_id, :task_id,:owner_id)
     end
 end

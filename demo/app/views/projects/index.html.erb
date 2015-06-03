@@ -12,7 +12,11 @@
         <p>contributors</p>
         <% project.users.each do |user| %>
         <%= user.email %>
-            <% end %>
+        <% end %>
+        <p>number of contributors</p>
+        <% project.users.each do |user| %>
+            <%= user.size %>
+        <% end %>
         <%= link_to 'Edit', edit_project_path(project) %>
       </div>
   <% end %>
